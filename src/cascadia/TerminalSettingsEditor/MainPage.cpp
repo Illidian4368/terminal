@@ -9,6 +9,7 @@
 #include "Compatibility.h"
 #include "Rendering.h"
 #include "RenderingViewModel.h"
+#include "Extensions.h"
 #include "Actions.h"
 #include "ProfileViewModel.h"
 #include "GlobalAppearance.h"
@@ -44,6 +45,7 @@ static const std::wstring_view renderingTag{ L"Rendering_Nav" };
 static const std::wstring_view compatibilityTag{ L"Compatibility_Nav" };
 static const std::wstring_view actionsTag{ L"Actions_Nav" };
 static const std::wstring_view newTabMenuTag{ L"NewTabMenu_Nav" };
+static const std::wstring_view extensionsTag{ L"Extensions_Nav" };
 static const std::wstring_view globalProfileTag{ L"GlobalProfile_Nav" };
 static const std::wstring_view addProfileTag{ L"AddProfile" };
 static const std::wstring_view colorSchemesTag{ L"ColorSchemes_Nav" };
@@ -444,6 +446,12 @@ namespace winrt::Microsoft::Terminal::Settings::Editor::implementation
                 const auto crumb = winrt::make<Breadcrumb>(box_value(clickedItemTag), RS_(L"Nav_NewTabMenu/Content"), BreadcrumbSubPage::None);
                 _breadcrumbs.Append(crumb);
             }
+        }
+        else if (clickedItemTag == extensionsTag)
+        {
+            contentFrame().Navigate(xaml_typename<Editor::Extensions>(), winrt::make<ExtensionsViewModel>(_settingsClone, _colorSchemesPageVM.AllColorSchemes()));
+            const auto crumb = winrt::make<Breadcrumb>(box_value(clickedItemTag), RS_(L"Nav_Extensions/Content"), BreadcrumbSubPage::None);
+            _breadcrumbs.Append(crumb);
         }
         else if (clickedItemTag == globalProfileTag)
         {
